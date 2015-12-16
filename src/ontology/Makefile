@@ -16,8 +16,9 @@ prepare_release: all
 	echo "Release files are now in $(RELEASEDIR) - now you should commit, push and make a release on github"
 
 
-$(ONT).owl: $(SRC) $(MODULE_FILES)
-	$(ROBOT) merge -i $<  $(patsubst %,-i %,$(MODULE_FILES)) reason -r ELK -s true annotate -V $(SDG)/releases/`date +%Y-%m-%d`/$(ONT).owl -o $@
+$(ONT).owl: $(SRC)
+	$(ROBOT)  annotate -i $< -V $(SDG)/releases/`date +%Y-%m-%d`/$(ONT).owl -o $@
+##	$(ROBOT)  reason -i $< -r ELK -s true annotate -V $(SDG)/releases/`date +%Y-%m-%d`/$(ONT).owl -o $@
 $(ONT).obo: $(ONT).owl
 	$(ROBOT) convert -i $< -o $(ONT).obo
 
