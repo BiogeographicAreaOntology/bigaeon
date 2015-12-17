@@ -23,7 +23,7 @@ $(ONT).obo: $(ONT).owl
 	$(ROBOT) convert -i $< -o $(ONT).obo
 
 
-IMPORTS = envo bfo pco iao ro
+IMPORTS = envo bfo pco iao ro ncbitaxon
 IMPORTS_OWL = $(patsubst %, imports/%_import.owl,$(IMPORTS)) $(patsubst %, imports/%_import.obo,$(IMPORTS))
 
 # Make this target to regenerate ALL
@@ -38,7 +38,7 @@ imports/%_import.obo: imports/%_import.owl
 	$(OWLTOOLS) $(USECAT) $< -o -f obo --no-check $@
 
 # clone remote ontology locally, perfoming some excision of relations and annotations
-mirror/%.owl: $(SRC)
+mirror/%.owl: imports/%_terms.txt
 	$(OWLTOOLS) $(OBO)/$*.owl --remove-annotation-assertions -l -s -d --remove-dangling-annotations  -o $@
 .PRECIOUS: mirror/%.owl
 
