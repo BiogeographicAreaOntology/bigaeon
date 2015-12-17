@@ -23,7 +23,7 @@ $(ONT).obo: $(ONT).owl
 	$(ROBOT) convert -i $< -o $(ONT).obo
 
 
-IMPORTS = envo bfo pco
+IMPORTS = envo bfo pco iao ro
 IMPORTS_OWL = $(patsubst %, imports/%_import.owl,$(IMPORTS)) $(patsubst %, imports/%_import.obo,$(IMPORTS))
 
 # Make this target to regenerate ALL
@@ -35,7 +35,7 @@ imports/%_import.owl: mirror/%.owl imports/%_terms.txt
 .PRECIOUS: imports/%_import.owl
 
 imports/%_import.obo: imports/%_import.owl
-	$(OWLTOOLS) $(USECAT) $< -o -f obo $@
+	$(OWLTOOLS) $(USECAT) $< -o -f obo --no-check $@
 
 # clone remote ontology locally, perfoming some excision of relations and annotations
 mirror/%.owl: $(SRC)
